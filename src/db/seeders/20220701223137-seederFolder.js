@@ -5,10 +5,10 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     let folders = []
 
-    for(let i = 0 ;i <5;i++){
+    for(let i = 0 ;i <3;i++){
       folders.push({
         name: randWord(),
-        userId: 1,
+        userId: randNumber({min:1,max:3}),
         createdAt: new Date
       })
     }

@@ -46,14 +46,10 @@ describe('TEST DE CARPETAS', function() {
             assert.equal(error.response.status, 400);
         }
     });
-    it('Puedo cambiar el nombre de una carpeta',async function(){
-        let id = this.folderAux.data.id;
-        const rta = await axios.patch('http://localhost:3000/folders/'+id,{name:'carpetaModificada'})
-        assert.equal(rta.data, 1)
-    });
     it('No puedo cambiar una carpeta que no existe',async function(){
         let id = 200;
-        const rta = await axios.patch('http://localhost:3000/folders/'+id,{name:'carpetaModificada'})
+        const rta = await axios.patch('http://localhost:3000/folders/'+id,{name:'NOEXISTE'})
+
         assert.equal(rta.data, 0)
     });
     it('No puedo poner carpeta con nombre HOLA',async function(){
@@ -67,8 +63,8 @@ describe('TEST DE CARPETAS', function() {
         }
     });
     it('La carpeta no puede repetir el nombre', async function() {
-        try{
-            this.folderAux = await axios.post('http://localhost:3000/folders',
+       try{
+            const otroPost = await axios.post('http://localhost:3000/folders',
                     {
                         name: 'fede',
                         userId: 2 
@@ -77,10 +73,18 @@ describe('TEST DE CARPETAS', function() {
             assert.equal(error.response.status,400)
         }
     }); 
+    it('Puedo cambiar el nombre de una carpeta',async function(){
+        let id = this.folderAux.data.id;
+        const rta = await axios.patch('http://localhost:3000/folders/'+id,{name:'carpetaModificada'})
+        assert.equal(rta.data, 1)
+    });
+    
    
      after('Elimino la carpeta creada para el test', async function() {
         let deleteId = this.folderAux.data.id;
         await axios.delete('http://localhost:3000/folders/' + deleteId);
     }); 
+
+   
 
 });

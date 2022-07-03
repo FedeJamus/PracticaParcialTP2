@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull:false,
-      unique:true,
+     // unique:true,
       validate:{
         notEmpty:true,
         noHola(params) {
@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate:{
         notNull:true,
+        notEmpty:true,
         isInt:true,
         min:1,
         max:9999999999999999999999

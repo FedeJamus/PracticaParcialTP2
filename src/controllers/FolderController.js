@@ -20,29 +20,31 @@ class FolderController{
         })
     }
     async createFolder(req,res){
-     /*  if(req.body.name===''){
-          res.status(400).send({mensaje:'El nombre no puede ser vacio'})
-      }  else{  */
-            await Folder.create(
-              {
-                  name: req.body.name,
-                  userId: req.body.userId
-              }
-          ).then(function(data){
-              res.status(201).send(data)
-            })
-            .catch(error => {
-              res.status(400).send(error)
-            })
-    //  }
+
+      let newFolder = await Folder.findOne({where:{name:req.body.name}})
+      if(newFolder === null ){
+        await Folder.create(
+          {
+              name: req.body.name,
+              userId: req.body.userId
+          }
+      ).then(function(data){
+          res.status(201).send(data)
+        })
+        .catch(error => {
+          res.status(400).send(error)
+        })
+      }else{
+        let resultado = {mensaje:"No puede crear otra carpeta con el mismo nombre"}
+        res.status(400).send(resultado)
+      }
     }
     async modifiyFolder(req,res){
         await Folder.update(
             {
                 name:req.body.name
-            },{where: {id : req.params.id}}
+            },{where: {id : req.params.id}}//poner id : re.params.id para q modifique por id
         ).then(function(data){
-          console.log(data)
             res.status(200).send(data)
           })
           .catch(error => {
@@ -59,13 +61,13 @@ class FolderController{
             res.status(400).send(error)
           })
     }
-    async getFilesByFolderId(req,res){
+    async getFileIdByFolderId(req,res){
         await Folder.findOne(
             {
                 where:{
                     id : req.params.id
                 },include:{model:File,where:{id:req.params.fileId}}
-            }//traigo un solo registro del otro modelo
+            }//traigo el archivo pedido de la carpeta pedida
         ).then(function(data){
             res.status(200).send(data)
           })
@@ -73,6 +75,20 @@ class FolderController{
             res.status(400).send(error)
           })
     }
+    async getFilesByFolderId(req,res){
+      await Folder.findOne(
+          {
+              where:{
+                  id : req.params.id
+              },include:{model:File}
+          }//traigo todos los archivos de la carpeta
+      ).then(function(data){
+          res.status(200).send(data)
+        })
+        .catch(error => {
+          res.status(400).send(error)
+        })
+  }
 }
 
 module.exports = FolderController;

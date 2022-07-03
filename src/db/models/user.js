@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       validate:{
         notEmpty:true,
-        noHola(params) {
+         noHola(params) {
           if(params === 'hola'){
             throw new Error('No podes poner hola')
           }
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
           if(!(params === 'fede' || params === 'fonso' || params === 'tom')){
             throw new Error('Pone estos nombres pa')
           }
-        }
+        } 
       }
     },
     surname:{

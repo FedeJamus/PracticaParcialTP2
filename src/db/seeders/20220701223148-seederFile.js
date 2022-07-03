@@ -8,7 +8,7 @@ module.exports = {
     for(let i = 0 ;i <5;i++){
       files.push({
         title: randWord(),
-        folderId: 1,
+        folderId: randNumber({min:1,max:3}),
         createdAt: new Date
       })
     }

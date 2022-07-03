@@ -9,16 +9,19 @@ module.exports = {
       surname: "jamus",
       type: 1,
       createdAt: new Date
+    },
+    {
+      name: "fonso",
+      surname: "algo",
+      type: 2,
+      createdAt: new Date
+    },
+    {
+      name: "tom",
+      surname: "climent",
+      type: 3,
+      createdAt: new Date
     })
-    for(let i = 0 ;i <4;i++){
-      users.push({
-        name: randWord(),
-        surname: randWord(),
-        type: 2,
-        createdAt: new Date
-      })
-    }
-
     await queryInterface.bulkInsert('users',users,{})
      
   },
